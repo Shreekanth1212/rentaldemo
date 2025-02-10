@@ -1,0 +1,42 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./BuyerPage.css"; // Import styles
+
+const BuyerPage = () => {
+  const [properties, setProperties] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/properties") // Fetch from local JSON server
+      .then((response) => setProperties(response.data))
+      .catch((error) => console.error("Error fetching properties:", error));
+  }, []);
+
+  return (
+    <div className="buyer-container">
+      <h2>Available Properties</h2>
+      <div className="property-list">
+        {properties.length > 0 ? (
+          properties.map((property) => (
+            <div key={property.id} className="property-card">
+              {property.images.length > 0 && (
+                <img src={property.images[0]} alt="Property" className="property-image" />
+              )}
+              <div className="property-details">
+                <h3>{property.propertyType} - {property.homeDetails}</h3>
+                <p><strong>Transaction:</strong> {property.transactionType}</p>
+                <p><strong>Price:</strong> ₹{property.price}</p>
+                <p><strong>Location:</strong> {property.location.state}, {property.location.district}, {property.location.pincode}</p>
+                <p><strong>Mobile:</strong> {property.mobileNumber}</p>
+                {property.notes && <p><strong>Notes:</strong> {property.notes}</p>}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No properties available.</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default BuyerPage;
