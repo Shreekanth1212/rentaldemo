@@ -1,30 +1,25 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import HouseRegistration from "./HouseRegistration";
+
 import SellerRegistration from "./SellerRegistration";
 import BuyerPage from "./BuyerPage";
+import { Routes, Route } from 'react-router-dom'; // No need for BrowserRouter here
+import Login from './Login';
+import Signup from './Signup';
+import AgentPage from "./AgentPage";
+
+
 
 function App() {
-  const [houses, setHouses] = useState([]); // Declare houses state
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/properties")
-      .then((response) => setHouses(response.data))
-      .catch((error) => console.error("Error fetching houses:", error));
-  }, []);
-
-
-
-
-
-  
   return (
-    <div>
-    <SellerRegistration/>
-     <BuyerPage/>
-   
-   
-    </div>
+  
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/buyer" element={<BuyerPage />} />
+        <Route path="/seller" element={<SellerRegistration />} />
+        <Route path="/agent" element={<AgentPage />} />
+        <Route path="/" element={<Login />} /> {/* Default route */}
+      </Routes>
+ 
   );
 }
 
