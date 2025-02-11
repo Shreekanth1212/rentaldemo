@@ -59,6 +59,16 @@
       "password": "1234",
       "confirmPassword": "1234",
       "role": "Buyer"
+    },
+    {
+      "id": "cda3",
+      "name": "shree",
+      "mobile": "1234567890",
+      "email": "shreekanth@instasafe.com",
+      "location": "idiranagar",
+      "password": "1234",
+      "confirmPassword": "1234",
+      "role": "Buyer"
     }
   ],
   "properties": [

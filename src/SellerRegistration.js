@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./SellerRegistration.css"; // Import CSS file
+import "./SellerRegistration.css"; // Updated CSS file
 
 const SellerRegistration = () => {
   const [formData, setFormData] = useState({
@@ -51,21 +51,17 @@ const SellerRegistration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate mobile number
-    if (!/^\d{10}$/.test(formData.mobileNumber)) {
+    if (!/^[0-9]{10}$/.test(formData.mobileNumber)) {
       alert("Enter a valid 10-digit mobile number.");
       return;
     }
 
-    // Validate price (positive number)
     if (formData.price <= 0 || isNaN(formData.price)) {
       alert("Enter a valid price.");
       return;
     }
 
-    // Trim notes input
     const trimmedNotes = formData.notes.trim();
-
     const finalData = { ...formData, notes: trimmedNotes };
 
     try {
@@ -73,7 +69,6 @@ const SellerRegistration = () => {
       console.log("Success:", response.data);
       alert("Property Registered Successfully!");
 
-      // Clear form after submission
       setFormData({
         userType: "",
         propertyType: "",
@@ -86,59 +81,58 @@ const SellerRegistration = () => {
         images: [],
       });
 
-      // Reset file input
-      document.getElementById("fileInput").value = "";
+      document.getElementById("seller-fileInput").value = "";
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
   return (
-    <div className="container">
-      <h2>Seller Registration</h2>
-      <form onSubmit={handleSubmit}>
-        <select name="userType" value={formData.userType} onChange={handleChange}>
+    <div className="seller-container">
+      <h2 className="seller-title">Seller Registration</h2>
+      <form onSubmit={handleSubmit} className="seller-form">
+        <select name="userType" value={formData.userType} onChange={handleChange} className="seller-select">
           <option value="">Select User Type</option>
           <option value="Owner">Owner</option>
           <option value="Agent">Agent</option>
           <option value="Builder">Builder</option>
         </select>
 
-        <select name="transactionType" value={formData.transactionType} onChange={handleChange}>
+        <select name="transactionType" value={formData.transactionType} onChange={handleChange} className="seller-select">
           <option value="">Select Transaction Type</option>
           <option value="Sale">Sale</option>
           <option value="Rent">Rent</option>
           <option value="Lease">Lease</option>
         </select>
 
-        <select name="propertyType" value={formData.propertyType} onChange={handleChange}>
+        <select name="propertyType" value={formData.propertyType} onChange={handleChange} className="seller-select">
           <option value="">Select Property Type</option>
           <option value="Apartment">Apartment</option>
           <option value="Home">Home</option>
         </select>
 
-        <select name="homeDetails" value={formData.homeDetails} onChange={handleChange}>
+        <select name="homeDetails" value={formData.homeDetails} onChange={handleChange} className="seller-select">
           <option value="">Select BHK Type</option>
           <option value="1BHK">1BHK</option>
           <option value="2BHK">2BHK</option>
           <option value="3BHK">3BHK</option>
         </select>
 
-        <div className="grid-container">
-          <input type="text" name="state" placeholder="State" value={formData.location.state} onChange={handleLocationChange} />
-          <input type="text" name="district" placeholder="District" value={formData.location.district} onChange={handleLocationChange} />
-          <input type="text" name="pincode" placeholder="Pincode" value={formData.location.pincode} onChange={handleLocationChange} />
+        <div className="seller-grid-container">
+          <input type="text" name="state" placeholder="State" value={formData.location.state} onChange={handleLocationChange} className="seller-input" />
+          <input type="text" name="district" placeholder="District" value={formData.location.district} onChange={handleLocationChange} className="seller-input" />
+          <input type="text" name="pincode" placeholder="Pincode" value={formData.location.pincode} onChange={handleLocationChange} className="seller-input" />
         </div>
 
-        <input type="number" name="price" placeholder="Price" value={formData.price} onChange={handleChange} />
+        <input type="number" name="price" placeholder="Price" value={formData.price} onChange={handleChange} className="seller-input" />
 
-        <input type="tel" name="mobileNumber" placeholder="Mobile Number" value={formData.mobileNumber} onChange={handleChange} required />
+        <input type="tel" name="mobileNumber" placeholder="Mobile Number" value={formData.mobileNumber} onChange={handleChange} className="seller-input" required />
 
-        <textarea name="notes" placeholder="Additional Notes" value={formData.notes} onChange={handleChange}></textarea>
+        <textarea name="notes" placeholder="Additional Notes" value={formData.notes} onChange={handleChange} className="seller-textarea"></textarea>
 
-        <input type="file" id="fileInput" multiple onChange={handleImageUpload} />
+        <input type="file" id="seller-fileInput" multiple onChange={handleImageUpload} className="seller-file-input" />
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="seller-button">Submit</button>
       </form>
     </div>
   );

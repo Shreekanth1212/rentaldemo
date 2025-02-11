@@ -13,29 +13,30 @@ const BuyerPage = () => {
 
   return (
     <div className="buyer-container">
-      <h2>Available Properties</h2>
-      <div className="property-list">
-        {properties.length > 0 ? (
-          properties.map((property) => (
-            <div key={property.id} className="property-card">
-              {property.images.length > 0 && (
-                <img src={property.images[0]} alt="Property" className="property-image" />
-              )}
-              <div className="property-details">
-                <h3>{property.propertyType} - {property.homeDetails}</h3>
-                <p><strong>Transaction:</strong> {property.transactionType}</p>
-                <p><strong>Price:</strong> ₹{property.price}</p>
-                <p><strong>Location:</strong> {property.location.state}, {property.location.district}, {property.location.pincode}</p>
-                <p><strong>Mobile:</strong> {property.mobileNumber}</p>
-                {property.notes && <p><strong>Notes:</strong> {property.notes}</p>}
-              </div>
+    <h2 className="buyer-title">Available Properties</h2>
+    <div className="buyer-property-list">
+      {properties.length > 0 ? (
+        properties.map((property) => (
+          <div key={property.id} className="buyer-property-card">
+            {property.images.length > 0 && (
+              <img src={property.images[0]} alt="Property" className="buyer-property-image" />
+            )}
+            <div className="buyer-property-details">
+              <h3>{property.propertyType} - {property.homeDetails}</h3>
+              <p><strong>Transaction:</strong> {property.transactionType}</p>
+              <p><strong>Price:</strong> ₹{property.price}</p>
+              <p><strong>Location:</strong> {property.location.state}, {property.location.district}, {property.location.pincode}</p>
+              <p><strong>Mobile:</strong> {property.mobileNumber}</p>
+              {property.notes && <p><strong>Notes:</strong> {property.notes}</p>}
             </div>
-          ))
-        ) : (
-          <p>No properties available.</p>
-        )}
-      </div>
+          </div>
+        ))
+      ) : (
+        <p>No properties available.</p>
+      )}
     </div>
+  </div>
+  
   );
 };
 

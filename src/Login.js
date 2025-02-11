@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";  // Import useNavigate hook for React Router v6
-import './css/Login.css';
-import Login_Back from  "./assets/Signup_Back.jpg";
+import { useNavigate } from "react-router-dom";
+import "./css/Login.css";
+import Login_Back from "./assets/Signup_Back.jpg";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +11,16 @@ const Login = () => {
   });
 
   const [loginFailed, setLoginFailed] = useState(false);
-  const navigate = useNavigate();  // For React Router v6
+  const navigate = useNavigate();
+  useEffect(() => {
+    // Disable scrolling
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      // Re-enable scrolling when component unmounts
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,19 +29,20 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get("http://localhost:5000/users"); // Fetch all users from db.json
-      const user = response.data.find((user) =>
-        (user.email === formData.emailOrPhone || user.mobile === formData.emailOrPhone) &&
-        user.password === formData.password
+      const response = await axios.get("http://localhost:5000/users");
+      const user = response.data.find(
+        (user) =>
+          (user.email === formData.emailOrPhone ||
+            user.mobile === formData.emailOrPhone) &&
+          user.password === formData.password
       );
       if (user) {
-        // Successful login, redirect based on user role
         if (user.role === "Buyer") {
-          navigate("/buyer"); // Redirect to the Buyer page
+          navigate("/buyer");
         } else if (user.role === "Seller") {
-          navigate("/seller"); // Redirect to the Seller page
+          navigate("/seller");
         } else if (user.role === "Agent") {
-          navigate("/agent"); // Redirect to the Agent page
+          navigate("/agent");
         }
       } else {
         setLoginFailed(true);
@@ -44,61 +54,58 @@ const Login = () => {
   };
 
   const handleRedirectToSignup = () => {
-    navigate("/signup"); // Redirect to Signup page
+    navigate("/signup");
   };
 
   return (
-    <div className="container">
-      {/* Left Side - Image */}
-      <div className="image-container">
-        <img src={Login_Back} alt="Login Background" className="image" />
-      </div>
-
-      {/* Right Side - Form */}
-      <div className="form-container">
-        <h2 className="title">Login</h2>
-        <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            name="emailOrPhone"
-            placeholder="Email or Mobile No"
-            value={formData.emailOrPhone}
-            onChange={handleChange}
-            className="input"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="input"
-            required
-          />
-
-          {loginFailed && <p className="error-message">Invalid email/phone or password. Please try again.</p>}
-
-          <button type="submit" className="submit-button">
-            Login
-          </button>
-
-          <div className="redirect-container">
-            <span>Don't have an account?</span>
-            <button
-              type="button"
-              className="signup-redirect-button"
-              onClick={handleRedirectToSignup}
-            >
-              Sign Up
-            </button>
-          </div>
-        </form>
-      </div>
+    <div className="login-container">
+    <div className="login-image-container">
+      <img src={Login_Back} alt="Login Background" className="login-image" />
     </div>
+  
+    <div className="login-form-container">
+      <h2 className="login-title">Login</h2>
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          name="emailOrPhone"
+          placeholder="Email or Mobile No"
+          value={formData.emailOrPhone}
+          onChange={handleChange}
+          className="login-input"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          className="login-input"
+          required
+        />
+  
+        {loginFailed && <p className="login-error-message">Invalid email/phone or password. Please try again.</p>}
+  
+        <button type="submit" className="login-submit-button">
+          Login
+        </button>
+  
+        <div className="login-redirect-container">
+          <span>Don't have an account?</span>
+          <button
+            type="button"
+            className="login-signup-redirect-button"
+            onClick={handleRedirectToSignup}
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
   );
 };
 
 export default Login;
-
-

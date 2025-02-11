@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./css/Signup.css";
@@ -15,6 +15,13 @@ const Signup = () => {
     role: "",
   });
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden"; // Disable scroll
+
+    return () => {
+      document.body.style.overflow = "auto"; // Enable scroll on unmount
+    };
+  }, []);
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate
 
