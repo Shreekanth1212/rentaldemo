@@ -5,6 +5,9 @@ import { Routes, Route } from 'react-router-dom'; // No need for BrowserRouter h
 import Login from './Login';
 import Signup from './Signup';
 import AgentPage from "./AgentPage";
+import Profile from "./Profile";
+import Logout from "./Logout";
+
 
 
 
@@ -18,6 +21,8 @@ function App() {
         <Route path="/seller" element={<SellerRegistration />} />
         <Route path="/agent" element={<AgentPage />} />
         <Route path="/" element={<Login />} /> {/* Default route */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
  
   );
