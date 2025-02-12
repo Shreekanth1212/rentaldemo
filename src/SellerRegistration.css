@@ -86,3 +86,14 @@
 .seller-file-input::file-selector-button:hover {
   background: #0056b3;
 }
+.image-preview {
+  margin-top: 10px;
+}
+
+.preview-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/Profile.css";
-
+import Navbar from "./Navbar";
 const Profile = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const Profile = () => {
 
 
   return (
+    <><Navbar/>
     <div className="profile-container">
       {/* Sidebar Navigation */}
       <div className="sidebar">
@@ -50,7 +51,7 @@ const Profile = () => {
           <p>Loading...</p>
         )}
       </div>
-    </div>
+    </div></>
   );
 };
 

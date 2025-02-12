@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./SellerRegistration.css"; // Updated CSS file
+import Navbar from "./Navbar";
 
 const SellerRegistration = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ const SellerRegistration = () => {
     price: "",
     mobileNumber: "",
     notes: "",
-    images: [],
+    images: "",
   });
 
   const handleChange = (e) => {
@@ -27,26 +28,23 @@ const SellerRegistration = () => {
   };
 
   const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const base64Promises = files.map((file) => {
-      return new Promise((resolve, reject) => {
-        if (file.size > 2 * 1024 * 1024) {
-          alert("Image size should be less than 2MB");
-          reject();
-        } else {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-        }
-      });
-    });
-
-    Promise.all(base64Promises)
-      .then((base64Images) => {
-        setFormData({ ...formData, images: base64Images });
-      })
-      .catch(() => {});
+    const file = e.target.files[0]; // Get the first selected file
+  
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Image size should be less than 2MB");
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setFormData({ ...formData, images: [reader.result] }); // Store as an array (for consistency)
+      };
+    }
   };
+  
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +60,16 @@ const SellerRegistration = () => {
     }
 
     const trimmedNotes = formData.notes.trim();
-    const finalData = { ...formData, notes: trimmedNotes };
+    const storedUser = JSON.parse(localStorage.getItem("user")); // Get user from localStorage
+
+    const finalData = { 
+     // ✅ Just use it directly
+      ...formData, 
+      email: storedUser.email ,
+      notes: trimmedNotes, 
+     
+    };
+    
 
     try {
       const response = await axios.post("http://localhost:5000/properties", finalData);
@@ -88,6 +95,7 @@ const SellerRegistration = () => {
   };
 
   return (
+    <><Navbar/>
     <div className="seller-container">
       <h2 className="seller-title">Seller Registration</h2>
       <form onSubmit={handleSubmit} className="seller-form">
@@ -135,6 +143,13 @@ const SellerRegistration = () => {
         <button type="submit" className="seller-button">Submit</button>
       </form>
     </div>
+    {/* Image Preview */}
+{formData.images.length > 0 && (
+  <div className="image-preview">
+    <img src={formData.images[0]} alt="Uploaded" className="preview-img" />
+  </div>
+)}
+</>
   );
 };
 

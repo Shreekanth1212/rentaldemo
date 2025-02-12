@@ -107,6 +107,25 @@
 .login-submit-button:hover {
   background-color: #0056b3;
 }
+.signup-text {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.signup-button {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.signup-button:hover {
+  color: darkblue;
+}
+
 
 /* Prevent scrolling */
 

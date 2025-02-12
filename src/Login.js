@@ -26,12 +26,13 @@ const Login = () => {
       );
 
       if (user) {
-        // Store user details in localStorage
-        localStorage.setItem("user", JSON.stringify(user));
+        // Remove password before storing in localStorage
+        const { password, ...userDataWithoutPassword } = user;
+        localStorage.setItem("user", JSON.stringify(userDataWithoutPassword));
 
         // Redirect based on role
         if (user.role === "Buyer") {
-          navigate("/profile");
+          navigate("/buyer");
         } else if (user.role === "Seller") {
           navigate("/seller");
         } else if (user.role === "Agent") {
@@ -70,6 +71,11 @@ const Login = () => {
           {loginFailed && <p className="error-message">Invalid credentials</p>}
           <button type="submit" className="submit-button">Login</button>
         </form>
+
+        {/* Signup link */}
+        <p className="signup-text">
+          Don't have an account? <button className="signup-button" onClick={() => navigate("/signup")}>Sign Up</button>
+        </p>
       </div>
     </div>
   );

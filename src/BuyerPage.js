@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./BuyerPage.css"; // Import styles
+import Navbar from "./Navbar";
 
 const BuyerPage = () => {
   const [properties, setProperties] = useState([]);
@@ -12,6 +13,7 @@ const BuyerPage = () => {
   }, []);
 
   return (
+    <><Navbar/>
     <div className="buyer-container">
     <h2 className="buyer-title">Available Properties</h2>
     <div className="buyer-property-list">
@@ -19,7 +21,7 @@ const BuyerPage = () => {
         properties.map((property) => (
           <div key={property.id} className="buyer-property-card">
             {property.images.length > 0 && (
-              <img src={property.images[0]} alt="Property" className="buyer-property-image" />
+              <img src={property.images} alt="Property" className="buyer-property-image" />
             )}
             <div className="buyer-property-details">
               <h3>{property.propertyType} - {property.homeDetails}</h3>
@@ -35,7 +37,7 @@ const BuyerPage = () => {
         <p>No properties available.</p>
       )}
     </div>
-  </div>
+  </div></>
   
   );
 };
