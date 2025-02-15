@@ -66,6 +66,7 @@ const SellerRegistration = () => {
      // ✅ Just use it directly
       ...formData, 
       email: storedUser.email ,
+      hide:false,
       notes: trimmedNotes, 
      
     };
@@ -78,6 +79,7 @@ const SellerRegistration = () => {
 
       setFormData({
         userType: "",
+        hide:false,
         propertyType: "",
         transactionType: "",
         homeDetails: "",

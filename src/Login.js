@@ -36,7 +36,7 @@ const Login = () => {
         } else if (user.role === "Seller") {
           navigate("/seller");
         } else if (user.role === "Agent") {
-          navigate("/agent");
+          navigate("/homepage");
         }
       } else {
         setLoginFailed(true);
@@ -48,9 +48,9 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <h2>Login</h2>
+    <div className="login-container">
+      <div className="login-form-container">
+        <h2 className="login-title">Login</h2>
         <form onSubmit={handleLogin}>
           <input
             type="text"
@@ -59,6 +59,7 @@ const Login = () => {
             value={formData.emailOrPhone}
             onChange={handleChange}
             required
+            className="login-input"
           />
           <input
             type="password"
@@ -67,9 +68,10 @@ const Login = () => {
             value={formData.password}
             onChange={handleChange}
             required
+            className="login-input"
           />
-          {loginFailed && <p className="error-message">Invalid credentials</p>}
-          <button type="submit" className="submit-button">Login</button>
+          {loginFailed && <p className="login-error-message">Invalid credentials</p>}
+          <button type="submit" className="login-submit-button">Login</button>
         </form>
 
         {/* Signup link */}

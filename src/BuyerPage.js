@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./BuyerPage.css"; // Import styles
+import "./css/BuyerPage.css"; // Import styles
 import Navbar from "./Navbar";
 
 const BuyerPage = () => {
